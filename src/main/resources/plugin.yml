@@ -1,0 +1,13 @@
+name: Core
+version: '${project.version}'
+main: me.kuboeb69.core.Core
+api-version: 1.17
+authors: [ KUBOEB69 ]
+description: Main plugin
+
+commands:
+  world:
+    usage: "/<command> <sub_command> <world_name>"
+    description: "Helps to manage worlds on the sever"
+    aliases: []
+    permission-message: "You don't have permission to use this command"

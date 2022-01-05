@@ -30,7 +30,7 @@ public class WorldCommand extends AbstractCommand {
     @Override
     public void execute(Core plugin, Player player, String[] args) {
         if(!player.hasPermission("core.world")) {
-            player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "You don't have permission to use that command");
+            player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "У вас нет прав на использование этой команды");
             return;
         }
         if(args.length == 1) {
@@ -38,7 +38,7 @@ public class WorldCommand extends AbstractCommand {
                 ListWorlds(plugin, player);
             }
             else {
-                player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "Invalid argument");
+                player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "Неизвестный аргумент");
             }
         }
         else if(args.length == 2) {
@@ -52,7 +52,7 @@ public class WorldCommand extends AbstractCommand {
                 RemoveWorld(plugin, player, args[1], args[2]);
             }
             else {
-                player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "Invalid arguments");
+                player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "Неизвестный аргумент");
             }
         }
         else if(args.length == 3) {
@@ -87,36 +87,36 @@ public class WorldCommand extends AbstractCommand {
             for(Player p : server.getOnlinePlayers()) {
                 if(p.getWorld() == world_to_remove) {
                     p.teleport(world_to_teleport.getSpawnLocation());
-                    p.sendMessage(ChatColor.YELLOW + "[Warning] " + ChatColor.GOLD + "You was teleported because the world you was in was removed");
+                    p.sendMessage(ChatColor.YELLOW + "[Warning] " + ChatColor.GOLD + "Вы телепортиваны из-за удаления мира");
                 }
             }
 
             if(server.unloadWorld(world_to_remove, false)) {
-                player.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "World \"" + world_to_remove_name + "\" was removed");
+                player.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "Мир \"" + world_to_remove_name + "\" был удалён");
 
                 worlds.remove(world_to_remove_name);
                 config.set("worlds", worlds);
                 plugin.saveConfig();
             } else {
-                player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "World \"" + world_to_remove_name + "\" wasn't removed");
+                player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "Мир \"" + world_to_remove_name + "\" не был удалён");
             }
 
         }
         else {
-            player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "Invalid world, type \"/world list\" to see all accessible worlds");
+            player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "Неизвестный мир, используйте \"/world list\" чтобы увидеть все миры");
         }
     }
 
     private void Teleport(Core plugin, Player player, String world_name) {
         for(String w : plugin.getConfig().getStringList("worlds")) {
             if(world_name.equals(w)) {
-                player.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "Generating world...");
+                player.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "Генерация мира...");
                 player.teleport(plugin.getServer().createWorld(new WorldCreator(world_name)).getSpawnLocation());
-                player.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "You teleported");
+                player.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "Вы телепортированы");
                 return;
             }
         }
-        player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "This world doesn't exist");
+        player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "Этот мир не существует");
     }
 
     private void CreateWorld(Core plugin, Player player, String world_name) {
@@ -125,32 +125,37 @@ public class WorldCommand extends AbstractCommand {
 
         for(String str : worlds) {
             if(str.equals(world_name)) {
-                player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "World with this name is already exist");
+                player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "Мир с таким именем уже есть");
                 return;
             }
         }
 
-        player.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "Creating new world...");
+        player.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "Создание мира...");
         plugin.getServer().createWorld(new WorldCreator(world_name));
         worlds.add(world_name);
 
         cfg.set("worlds", worlds);
         plugin.saveConfig();
-        player.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "The world \"" + world_name + "\" was created");
+        player.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "Мир \"" + world_name + "\" создан");
     }
 
     private void ListWorlds(Core plugin, Player player) {
-        player.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "List of worlds: " + plugin.getConfig().getStringList("worlds").toString());
+        player.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "Миры: " + plugin.getConfig().getStringList("worlds").toString());
     }
 
     private void SendHelpUsage(Player player) {
-        player.sendMessage(ChatColor.GOLD + "--------------------\n " +
-                "Usage: \"\\world <arg> <world_name>\"\n" +
-                "  Args:\n" +
-                "  - remove - teleports all players to another world then removes and unloads world\n" +
-                "  - create - creates new world\n" +
-                "  - list - shows all worlds\n" +
-                "  - tp - teleports you to another world\n" +
-                "--------------------");
+        ChatColor gold = ChatColor.GOLD;
+        ChatColor bold = ChatColor.BOLD;
+        ChatColor blue = ChatColor.BLUE;
+
+        player.sendMessage(
+                gold + "--------------------\n " +
+                        "Usage: \"\\world <arg>\"\n" +
+                        "  Args:\n" +
+                        blue + bold + "  - remove <world_name> <world_name> " + gold +  "- Удаляет первый мир телепортирует всех с первого мира во второй\n" +
+                        blue + bold + "  - create <world_name> " + gold +  "- Создаёт новый мир, если мира с таким именем нет\n" +
+                        blue + bold + "  - list " + gold + "- Показывает все миры\n" +
+                        blue + bold + "  - tp <world_name> " + gold +  "- Телепортирует в другой мир, если он есть\n" +
+                        gold + bold + "--------------------");
     }
 }

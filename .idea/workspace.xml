@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c7702d74-3574-4723-aad0-3c323ab27e11" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Core.iml" beforeDir="false" />
+    <list default="true" id="c7702d74-3574-4723-aad0-3c323ab27e11" name="Changes" comment="Убрал спавн, сообщения теперь на русском">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Core.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/kuboeb69/core/Core.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/kuboeb69/core/Core.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/kuboeb69/core/commands/WorldCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/kuboeb69/core/commands/WorldCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/kuboeb69/core/listeners/PlayerJoin.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +26,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -37,6 +37,14 @@
       <option name="presentableId" value="Default" />
       <updated>1641361125924</updated>
     </task>
+    <task id="LOCAL-00001" summary="Убрал спавн, сообщения теперь на русском">
+      <created>1641361325661</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1641361325661</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -49,5 +57,10 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Убрал спавн, сообщения теперь на русском" />
+    <option name="LAST_COMMIT_MESSAGE" value="Убрал спавн, сообщения теперь на русском" />
   </component>
 </project>

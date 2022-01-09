@@ -17,8 +17,7 @@ public class WorldCommand extends AbstractCommand {
         return "world";
     }
 
-    @Override
-    public String[] getArgs() {
+    static public String[] getArgs() {
         return new String[] {
                 "list",
                 "create",
@@ -33,36 +32,20 @@ public class WorldCommand extends AbstractCommand {
             player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "У вас нет прав на использование этой команды");
             return;
         }
-        if(args.length == 1) {
-            if(args[0].equalsIgnoreCase("list")) {
-                ListWorlds(plugin, player);
-            }
-            else {
-                player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "Неизвестный аргумент");
-            }
+
+        if(args.length < 1) {
+            player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "Введены неизвестные аргументы");
+            return;
         }
-        else if(args.length == 2) {
-            if(args[0].equalsIgnoreCase("tp")) {
-                Teleport(plugin, player, args[1]);
-            }
-            else if(args[0].equalsIgnoreCase("create")) {
-                CreateWorld(plugin, player, args[1]);
-            }
-            else if(args[0].equalsIgnoreCase("remove")) {
-                RemoveWorld(plugin, player, args[1], args[2]);
-            }
-            else {
-                player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "Неизвестный аргумент");
-            }
+
+        switch(args[0]) {
+            case "list" -> ListWorlds(plugin, player);
+            case "tp" -> Teleport(plugin, player, args);
+            case "create" -> CreateWorld(plugin, player, args);
+            case "remove" -> RemoveWorld(plugin, player, args[1], args[2]);
+            default -> SendHelpUsage(player);
         }
-        else if(args.length == 3) {
-            if(args[0].equalsIgnoreCase("remove")) {
-                RemoveWorld(plugin, player, args[1], args[2]);
-            }
-        }
-        else {
-            SendHelpUsage(player);
-        }
+
     }
 
     private void RemoveWorld(Core plugin, Player player, String world_to_remove_name, String world_to_teleport_name) {
@@ -107,7 +90,14 @@ public class WorldCommand extends AbstractCommand {
         }
     }
 
-    private void Teleport(Core plugin, Player player, String world_name) {
+    private void Teleport(Core plugin, Player player, String[] args) {
+        if(args.length != 2) {
+            player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "Укажите название мира");
+            return;
+        }
+
+        String world_name = args[1];
+
         for(String w : plugin.getConfig().getStringList("worlds")) {
             if(world_name.equals(w)) {
                 player.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "Генерация мира...");
@@ -119,8 +109,9 @@ public class WorldCommand extends AbstractCommand {
         player.sendMessage(ChatColor.RED + "[Error] " + ChatColor.GOLD + "Этот мир не существует");
     }
 
-    private void CreateWorld(Core plugin, Player player, String world_name) {
+    private void CreateWorld(Core plugin, Player player, String[] args) {
         FileConfiguration cfg = plugin.getConfig();
+        String world_name = args[1];
         List<String> worlds = cfg.getStringList("worlds");
 
         for(String str : worlds) {
@@ -140,7 +131,7 @@ public class WorldCommand extends AbstractCommand {
     }
 
     private void ListWorlds(Core plugin, Player player) {
-        player.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "Миры: " + plugin.getConfig().getStringList("worlds").toString());
+        player.sendMessage(ChatColor.GREEN + "[Info] " + ChatColor.GOLD + "Миры: " + plugin.getServer().getWorldContainer());
     }
 
     private void SendHelpUsage(Player player) {

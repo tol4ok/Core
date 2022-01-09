@@ -22,7 +22,7 @@ public class WorldTabCompleter implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String str, String[] args) {
 
         if(args.length == 1) {
-            return Arrays.asList(new WorldCommand().getArgs());
+            return Arrays.asList(WorldCommand.getArgs());
         }
         else if(args.length > 1 && !args[0].equals("create") && !args[0].equals("list")) {
             return _plugin.getConfig().getStringList("worlds");
